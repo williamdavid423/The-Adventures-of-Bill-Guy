@@ -93,15 +93,11 @@ namespace The_Adventures_of_Bill_Guy
             {
                 playerX += playerspeed;
             }
-          else if (wDown == true & playerY > 0)
+          else if (wDown == true && playerY > 0)
             {
                 playerY -= playerspeed;
             }
-            else if (wDown == false & playerY > 0)
-            {
-                playerY += playerspeed;
-            }
-
+          
             Refresh();
 
         }
