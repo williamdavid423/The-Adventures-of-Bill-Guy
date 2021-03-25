@@ -12,15 +12,15 @@ namespace The_Adventures_of_Bill_Guy
 {
     public partial class Form1 : Form
     {
-        int jumpSpeed = 6;
+        int jumpCounter = 0;
+        bool jump = false;
+       
+      int[] jumpList = new int[]{-90, -32, -24, -16, -8, 0, 8, 16, 24, 32, 90};
 
-        List<int> brick = new List<int>();
-        int[] playerJump = new int[] { 6, 5, 4, 3, 2, 1, -1, -2, -3, -4, -5, -6};
-
-        int playerX = 65;
-        int playerY = 520;
-        int playerHeight = 600;
-        int playerWidth = 70;
+        int playerX = 69;
+        int playerY = 540;
+        int playerHeight = 60;
+        int playerWidth = 40;
 
 
         Pen darkGrey = new Pen(Color.DimGray);
@@ -28,10 +28,13 @@ namespace The_Adventures_of_Bill_Guy
 
         int playerspeed = 6;
 
+
         bool wDown = false;
         bool aDown = false;
         bool sDown = false;
         bool dDown = false;
+
+        Rectangle ledge = new Rectangle(400, 440, 400, 20);
 
         public Form1()
         {
@@ -40,7 +43,7 @@ namespace The_Adventures_of_Bill_Guy
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            switch(e.KeyCode)
+            switch (e.KeyCode)
             {
                 case Keys.W:
                     wDown = true;
@@ -53,6 +56,12 @@ namespace The_Adventures_of_Bill_Guy
                     break;
                 case Keys.D:
                     dDown = true;
+                    break;
+                case Keys.Space:
+                    if(jump == false)
+                    {
+                        jump = true;
+                    }
                     break;
             }
 
@@ -80,26 +89,52 @@ namespace The_Adventures_of_Bill_Guy
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.DrawRectangle(darkGrey, playerX, playerY, playerWidth, playerHeight);
-            e.Graphics.FillRectangle(darkGrayBrush, playerX, playerY, playerWidth, playerHeight);
+
+            e.Graphics.DrawRectangle(darkGrey, 400, 440, 400, 20);
+            e.Graphics.FillRectangle(darkGrayBrush, 400, 440, 400, 20);
+      
+
         }
 
         private void GameTimer_Tick(object sender, EventArgs e)
         {
-            if(aDown == true && playerX > 0)
+            Rectangle playerRec = new Rectangle(playerX, playerY, playerWidth, playerHeight);
+
+            //if(wDown == false)
+            //{
+            //    playerY += playerspeed;
+            //}
+            if(jump == true)
+            {
+                playerY += jumpList[jumpCounter];
+                jumpCounter++;
+                if (jumpCounter == 11)
+                {
+                    jumpCounter = 0;
+                    jump = false;
+                }
+
+            }
+
+     
+      
+            if (aDown == true && playerX > 0)
             {
                 playerX -= playerspeed;
             }
-            else if(dDown == true && playerX < this.Width - playerWidth)
+            else if (dDown == true && playerX < this.Width - playerWidth)
             {
                 playerX += playerspeed;
             }
-          else if (wDown == true && playerY > 0)
+            else if(wDown == true && playerY > 0)
             {
-                playerY -= playerspeed;
+                for(int i = 0; i > jumpList.Length; i++)
+                {
+                    playerY -= jumpList[i];
+                }
             }
-          
-            Refresh();
 
-        }
+            Refresh();
+        }  
     }
 }
