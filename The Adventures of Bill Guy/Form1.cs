@@ -113,7 +113,6 @@ namespace The_Adventures_of_Bill_Guy
                     jumpCounter = 0;
                     jump = false;
                 }
-
             }
 
      
