@@ -35,6 +35,7 @@ namespace The_Adventures_of_Bill_Guy
         bool dDown = false;
 
         Rectangle ledge = new Rectangle(400, 440, 400, 20);
+        Rectangle floor = new Rectangle(0, 0, 800, 600);
 
         public Form1()
         {
@@ -100,11 +101,9 @@ namespace The_Adventures_of_Bill_Guy
         {
             Rectangle playerRec = new Rectangle(playerX, playerY, playerWidth, playerHeight);
 
-            //if(wDown == false)
-            //{
-            //    playerY += playerspeed;
-            //}
-            if(jump == true)
+
+        
+            if (jump == true)
             {
                 playerY += jumpList[jumpCounter];
                 jumpCounter++;
