@@ -113,6 +113,12 @@ namespace The_Adventures_of_Bill_Guy
                     jump = false;
                 }
             }
+            if(jumpCounter == 11 && playerY < 460)
+            {
+                jumpCounter = 0;
+                jump = false;
+            }
+       
 
      
       
