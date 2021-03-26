@@ -14,8 +14,8 @@ namespace The_Adventures_of_Bill_Guy
     {
         int jumpCounter = 0;
         bool jump = false;
-       
-      int[] jumpList = new int[]{-90, -32, -24, -16, -8, 0, 8, 16, 24, 32, 90};
+
+        int[] jumpList = new int[] { -90, -32, -24, -16, -8, 0, 8, 16, 24, 32, 90 };
 
         int playerX = 69;
         int playerY = 540;
@@ -36,6 +36,7 @@ namespace The_Adventures_of_Bill_Guy
 
         Rectangle ledge = new Rectangle(400, 440, 400, 20);
         Rectangle floor = new Rectangle(0, 0, 800, 600);
+
 
         public Form1()
         {
@@ -59,7 +60,7 @@ namespace The_Adventures_of_Bill_Guy
                     dDown = true;
                     break;
                 case Keys.Space:
-                    if(jump == false)
+                    if (jump == false)
                     {
                         jump = true;
                     }
@@ -93,16 +94,15 @@ namespace The_Adventures_of_Bill_Guy
 
             e.Graphics.DrawRectangle(darkGrey, 400, 440, 400, 20);
             e.Graphics.FillRectangle(darkGrayBrush, 400, 440, 400, 20);
-      
+
 
         }
 
         private void GameTimer_Tick(object sender, EventArgs e)
         {
             Rectangle playerRec = new Rectangle(playerX, playerY, playerWidth, playerHeight);
+            Rectangle playerTop = new Rectangle(playerX, playerY, playerWidth, 1);
 
-
-        
             if (jump == true)
             {
                 playerY += jumpList[jumpCounter];
@@ -112,16 +112,20 @@ namespace The_Adventures_of_Bill_Guy
                     jumpCounter = 0;
                     jump = false;
                 }
-            }
-            if(jumpCounter == 11 && playerY < 460)
-            {
-                jumpCounter = 0;
-                jump = false;
-            }
-       
 
-     
-      
+            }
+
+            if (playerTop.IntersectsWith(ledge))
+            {
+                jumpCounter = jumpList.Count() - jumpCounter;
+                if (jumpCounter == 11)
+                {
+                    jumpCounter = 0;
+                    jump = false;
+                }
+            }
+
+
             if (aDown == true && playerX > 0)
             {
                 playerX -= playerspeed;
@@ -130,15 +134,15 @@ namespace The_Adventures_of_Bill_Guy
             {
                 playerX += playerspeed;
             }
-            else if(wDown == true && playerY > 0)
+            else if (wDown == true && playerY > 0)
             {
-                for(int i = 0; i > jumpList.Length; i++)
+                for (int i = 0; i > jumpList.Length; i++)
                 {
                     playerY -= jumpList[i];
                 }
             }
 
             Refresh();
-        }  
+        }
     }
 }
